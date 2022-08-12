@@ -1,0 +1,8 @@
+create_table("events") {
+    t.Column("id", "uuid", {primary: true})
+    t.Timestamps()
+
+	t.Column("company_id", "string", {})
+	t.Column("type", "string", {})
+	t.Column("timestamp", "timestamp", {})
+}

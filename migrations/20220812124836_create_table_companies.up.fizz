@@ -1,0 +1,6 @@
+create_table("companies") {
+    t.Column("id", "uuid", {primary: true})
+    t.Timestamps()
+	t.Column("name", "string", {})
+	t.Column("status", "string", {})
+}
