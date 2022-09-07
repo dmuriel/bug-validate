@@ -32,3 +32,16 @@ func Create2(tx *pop.Connection, event models.Event) (*validate.Errors, error) {
 
 	return nil, nil
 }
+
+func Update1(tx *pop.Connection, event models.Event) (*validate.Errors, error) {
+	verrs := Validate3(tx, event)
+	if verrs.HasAny() {
+		return verrs, nil
+	}
+
+	if err := tx.Update(&event); err != nil {
+		return nil, err
+	}
+
+	return nil, nil
+}

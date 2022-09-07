@@ -3,6 +3,7 @@ package home_test
 import (
 	"bugvalidate/app"
 	"bugvalidate/app/models"
+	"fmt"
 	"net/http"
 	"testing"
 
@@ -28,6 +29,21 @@ func (as *ActionSuite) Test_Home_Create1() {
 		res := as.HTML("/create-1").Post(values)
 		as.Equal(http.StatusSeeOther, res.Code)
 	})
+}
+
+func (as *ActionSuite) Test_Home_Update1() {
+	company := models.Company{Name: "Test Company", Status: "Active"}
+	as.NoError(as.DB.Create(&company))
+
+	event := models.Event{CompanyID: company.ID}
+	as.NoError(as.DB.Create(&event))
+
+	for i := 0; i < 1000; i++ {
+		values := models.Event{ID: event.ID, Type: fmt.Sprintf("Test %d", i), CompanyID: company.ID}
+
+		res := as.HTML("/update-1").Put(values)
+		as.Equal(http.StatusSeeOther, res.Code)
+	}
 }
 
 /*

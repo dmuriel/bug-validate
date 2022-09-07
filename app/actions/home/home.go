@@ -42,6 +42,27 @@ func Create1(c buffalo.Context) error {
 	return c.Redirect(http.StatusSeeOther, "homeIndexPath()")
 }
 
+func Update1(c buffalo.Context) error {
+	tx := c.Value("tx").(*pop.Connection)
+	event := models.Event{}
+
+	if err := c.Bind(&event); err != nil {
+		return err
+	}
+
+	verrs, err := events.Update1(tx, event)
+	if err != nil {
+		return err
+	}
+
+	if verrs.HasAny() {
+		c.Logger().Error(verrs)
+		return c.Render(http.StatusUnprocessableEntity, r.HTML("home/index.plush.html"))
+	}
+
+	return c.Redirect(http.StatusSeeOther, "homeIndexPath()")
+}
+
 func Create2(c buffalo.Context) error {
 	tx := c.Value("tx").(*pop.Connection)
 	event := models.Event{}

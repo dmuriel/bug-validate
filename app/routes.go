@@ -19,6 +19,7 @@ func setRoutes(root *buffalo.App) {
 
 	root.GET("/", home.Index).Name("homeIndexPath")
 	root.POST("/create-1", home.Create1).Name("homeCreate1Path")
+	root.PUT("/update-1", home.Update1).Name("homeUpdate1Path")
 	root.POST("/create-2", home.Create2).Name("homeCreate2Path")
 	root.ServeFiles("/", http.FS(public.FS()))
 }
